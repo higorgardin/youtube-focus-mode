@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Focus Mode",
+  "version": "1.0.0",
+  "description": "Modo foco para YouTube",
+  "author": "Higor Gardin",
+  "permissions": ["scripting", "activeTab", "storage", "tabs"],
+  "action": {
+    "default_title": "YouTube Focus Mode",
+    "default_popup": "index.html",
+    "default_icon": "imgs/icon.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["imgs/*"],
+      "matches": ["*://*/*"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "js": ["pre_exec.js"],
+      "run_at": "document_start",
+      "matches": ["*://*/*"],
+      "all_frames": false
+    },
+    {
+      "js": ["post_exec.js", "script.js"],
+      "run_at": "document_end",
+      "matches": ["*://*/*"],
+      "all_frames": false
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": "Ctrl+Shift+L",
+      "description": "Activate focus mode"
+    }
+  },
+  "icons": {
+    "16": "imgs/icon16.png",
+    "48": "imgs/icon32.png",
+    "128": "imgs/icon128.png"
+  }
+}
