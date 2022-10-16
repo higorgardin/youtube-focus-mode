@@ -30,9 +30,25 @@ function addListeners() {
       .getElementById("enableDisable")
       .addEventListener("change", (event) => {
         const isChecked = document.getElementById("enableDisable").checked;
+
         chrome.storage.sync.set({ isEnabled: isChecked }, function () {});
+
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+          chrome.scripting.executeScript({
+            target: { tabId: tabs[0].id },
+            function: reloadPage,
+          });
+        });
       });
   }
+}
+
+/**
+ * Recarrega a página
+ */
+function reloadPage() {
+  const currentLocation = window.location;
+  currentLocation.reload();
 }
 
 onInit();
