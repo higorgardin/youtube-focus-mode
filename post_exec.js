@@ -1,12 +1,17 @@
-/*
-VIDEO ELEMENT = getElementsByTagName("ytd-rich-item-renderer")
-CHIP ELEMENT = document.getElementsByTagName("yt-chip-cloud-chip-renderer")
-*/
+/**
+ * Tratamentos de inicialização
+ */
+function onInit() {
+  const currentLocation = window.location;
+
+  if (!currentLocation.host.includes("youtube")) {
+    return;
+  }
+
+  checkContent();
+}
 
 async function checkContent() {
-  var currentLocation = window.location;
-  // console.log(currentLocation);
-
   chrome.storage.sync.get(["isEnabled"], async function (result) {
     if (Boolean(result.isEnabled)) {
       const tries = 200;
@@ -91,16 +96,4 @@ async function checkContent() {
   });
 }
 
-function manageSettings() {
-  // const value = "1";
-  // chrome.storage.sync.set({ isEnabled: value }, function () {
-  //   console.log("Value is set to " + value);
-  // });
-  // chrome.storage.sync.get(["isEnabled"], function (result) {
-  //   console.log("Value currently is " + result.isEnabled);
-  // });
-}
-
-checkContent();
-
-manageSettings();
+onInit();

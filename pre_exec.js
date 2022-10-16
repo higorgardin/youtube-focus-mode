@@ -1,7 +1,17 @@
-async function checkContent() {
-  var currentLocation = window.location;
-  // console.log(currentLocation);
+/**
+ * Tratamentos de inicialização
+ */
+function onInit() {
+  const currentLocation = window.location;
 
+  if (!currentLocation.host.includes("youtube")) {
+    return;
+  }
+
+  checkContent();
+}
+
+async function checkContent() {
   chrome.storage.sync.get(["isEnabled"], async function (result) {
     if (Boolean(result.isEnabled)) {
       const tries = 200;
@@ -35,4 +45,4 @@ async function checkContent() {
   });
 }
 
-checkContent();
+onInit();
